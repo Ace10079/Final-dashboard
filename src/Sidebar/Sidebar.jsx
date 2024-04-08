@@ -23,31 +23,31 @@ function Sidebar() {
                             <li className={`${activeItem === 'dashboard' ? 'text-white' : 'text-gray-400'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/" onClick={() => handleItemClick('dashboard')}>Dashboard</Link>
                             </li>
-                            <IconDashboard stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3'}`} />
+                            <IconDashboard stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
                         <div className='flex justify-between'>
                             <li className={`${activeItem === 'customer' ? 'text-white' : 'text-gray-400'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/customer" onClick={() => handleItemClick('customer')}>Customer</Link>
                             </li>
-                            <IconUser stroke={1} className={` ${open ? 'hidden' : 'w-[30px] h-[30px] mr-3'}`} />
+                            <IconUser stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
                         <div className='flex justify-between'>
                             <li className={`${activeItem === 'search' ? 'text-white' : 'text-gray-400'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/search" onClick={() => handleItemClick('search')}>Search</Link>
                             </li>
-                            <IconSearch stroke={1} className={` ${open ? 'hidden' : 'w-[30px] h-[30px] mr-3'}`} />
+                            <IconSearch stroke={1}className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
                         <div className='flex justify-between'>
                             <li className={`${activeItem === 'solution' ? 'text-white' : 'text-gray-400'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/solution" onClick={() => handleItemClick('solution')}>Solution</Link>
                             </li>
-                            <IconDashboard stroke={1} className={` ${open ? 'hidden' : 'w-[30px] h-[30px] mr-3'}`} />
+                            <IconDashboard stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
                         <div className='flex justify-between'>
                             <li className={`${activeItem === 'admin' ? 'text-white' : 'text-gray-400'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/admin" onClick={() => handleItemClick('admin')}>Admin</Link>
                             </li>
-                            <IconUsers stroke={1} className={` ${open ? 'hidden' : 'w-[30px] h-[30px] mr-3'}`} />
+                            <IconUsers stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
                     </ul>
                 </div>

@@ -1,44 +1,35 @@
-import Admin from "./Admin/Admin";
-import Customer from "./Customer/Customer";
-import Search from "./Search/Search";
-import Cards from "./Sidebar/Cards"
-import Dashboard from "./Sidebar/Dashboard";
-import Header from "./Sidebar/Header"
-import Sidebar from "./Sidebar/Sidebar"
-import Table1 from "./Sidebar/Table1"
-import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import Solution from "./Solution/Solution";
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Sidebar from './Sidebar/Sidebar';
+import Header from './Sidebar/Header';
+import Dashboard from './Sidebar/Dashboard';
+import Admin from './Admin/Admin';
+import Customer from './Customer/Customer';
+import Search from './Search/Search';
+import Solution from './Solution/Solution';
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path:"/",
-      element: <Dashboard/>
-    },
-    {
-      path:"/customer",
-      element: <Customer/>
-    },
-    {
-      path:"/search",
-      element: <Search/>
-    },
-    {
-      path:"/admin",
-      element: <Admin/>
-    },
-    {
-      path:"/solution",
-      element: <Solution/>
-    }
-  ])
-    
   return (
-    <>
-      <RouterProvider router={router}/>
-    </>
-  )
+    <Router>
+      <div className='flex'>
+      <div>
+      <Sidebar />
+      </div>
+      <div className="w-full">
+          <Header />
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/customer" element={<Customer />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/solution" element={<Solution />} />
+            </Routes>
+          </div>
+      </div>
+    
+          
+    </Router>
+  );
 }
 
-export default App
+export default App;

@@ -1,20 +1,12 @@
-import React from 'react'
-import Table2 from './Table2'
-import Sidebar from '../Sidebar/Sidebar'
-import Header from '../Sidebar/Header'
+import React from 'react';
+import Table2 from './Table2';
 
 function Customer() {
   return (
-    <div className="flex">
-        <div>
-          <Sidebar/>
-        </div>
-        <div className="w-full">
-          <Header/>
-         <Table2/> 
-        </div>
-      </div>
-  )
+    <div>
+      <Table2 />
+    </div>
+  );
 }
 
-export default Customer
+export default Customer;

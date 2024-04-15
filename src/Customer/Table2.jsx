@@ -6,7 +6,7 @@ import { IconDotsVertical } from '@tabler/icons-react';
 function Table2() {
   return (
     <div className='bg-slate-100 border-solid border-2 rounded-lg m-3' style={{ maxHeight: '350px', overflow: 'auto' }}>
-      <p className='p-2 font-bold font-[rubik]'>
+      <p className='p-2 font-bold font-[Century Gothic]'>
         Customer List
       </p>
       <div className='p-1'>

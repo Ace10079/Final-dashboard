@@ -4,3 +4,6 @@
 body{
     overflow-x: hidden;
 }
+.text-opacity-40 {
+    color: rgba(255, 255, 255, 0.4); /* White color with 40% opacity */
+}

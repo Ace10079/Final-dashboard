@@ -8,7 +8,7 @@ function Table3() {
     return (
         <div className='bg-slate-100 border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
             <div className='flex justify-between'>
-                <p className='p-2 font-bold text-2xl font-[rubik]' >
+                <p className='p-2 font-bold  font-[Century Gothic]' >
                     Recently Searched
                 </p>
                 <div className='flex justify-end bg-white m-2 border rounded-lg'>

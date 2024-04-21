@@ -1,47 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Sidebar from './Sidebar/Sidebar';
-import Header from './Sidebar/Header';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Dashboard from './Sidebar/Dashboard';
 import Admin from './Admin/Admin';
 import Customer from './Customer/Customer';
 import Search from './Search/Search';
 import Solution from './Solution/Solution';
+import Layout from './Layout/Layout';
 import SignUp from './SignUp/SignUp';
-import Profile from './Profile/Profile';
+import Account from './Profile/Account';
+
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path='/login' element={<SignUp />} />
-          <Route path='/*' element={<MainContentWithSidebarAndHeader />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-
-function MainContentWithSidebarAndHeader() {
-  return (
-    <div className='flex'>
-      <div>
-        <Sidebar />
-      </div>
-      <div className="w-full">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/admin" element={<Admin />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<SignUp/>}></Route>
+        <Route path="/" element={<Layout />}>
+          <Route exact path="/" element={<Dashboard />} />
           <Route path="/customer" element={<Customer />} />
           <Route path="/search" element={<Search />} />
           <Route path="/solution" element={<Solution />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </div>
-    </div>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/profile" element={<Account />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
+
 
 export default App;

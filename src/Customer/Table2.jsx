@@ -4,9 +4,14 @@ import Table from "react-bootstrap/Table";
 import { IconDotsVertical } from "@tabler/icons-react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
+import { useNavigate } from "react-router-dom";
 
 function Table2() {
+  const history = useNavigate();
+
+  const goToAccount = () => {
+    history("/customer_edit"); // Assuming '/profile' is the path to your Account component
+  };
   const [dropdownIndex, setDropdownIndex] = useState(null); // State to manage which dropdown is open
   const [showModal, setShowModal] = useState(false); // State to manage modal visibility
 
@@ -73,9 +78,12 @@ function Table2() {
                     {dropdownIndex === index && (
                       <div
                         className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border"
-                        style={{ left: "-5px" }}
+                        style={{ left: "-35px" }}
                       >
-                        <button className="block w-full text-left px-4 py-1 hover:bg-gray-200">
+                        <button
+                          onClick={goToAccount}
+                          className="block w-full text-left px-4 py-1 hover:bg-gray-200"
+                        >
                           Edit
                         </button>
                         <div className="border-t border-black"></div>{" "}
@@ -95,11 +103,16 @@ function Table2() {
           </tbody>
         </Table>
       </div>
-
-      {/* Modal for delete confirmation */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-      <button   onClick={() => setShowModal(false)} className="text-white absolute left-[460px] top-[10px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full">X</button>
-        <p className="text-2xl text-center pt-5 font-bold">Are you Sure</p>
+        <button
+          onClick={() => setShowModal(false)}
+          className="text-white absolute lg:left-[460px] lg:top-[10px] right-[4px] top-[4px] font-bold bg-green-600 pl-[7px] pr-2 pt-0.5 pb-0.5 rounded-full"
+          style={{ width: "24px", height: "24px", lineHeight: "1" }}
+        >
+          X
+        </button>
+
+        <p className="text-2xl text-center pt-3 font-bold">Are you Sure</p>
         <p className="text-xl text-center p-3">
           Are you sure do you want to delete the customer ID
         </p>
@@ -111,7 +124,11 @@ function Table2() {
           >
             Confirm
           </Button>
-          <Button className="pl-5 pr-5" variant="success" onClick={() => setShowModal(false)}>
+          <Button
+            className="pl-5 pr-5"
+            variant="success"
+            onClick={() => setShowModal(false)}
+          >
             Cancel
           </Button>
         </div>

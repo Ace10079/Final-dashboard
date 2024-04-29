@@ -9,6 +9,12 @@ import Solution from './Solution/Solution';
 import Layout from './Layout/Layout';
 import SignUp from './SignUp/SignUp';
 import Account from './Profile/Account';
+import Edit from './Customer/Edit';
+import View from './Search/View';
+import EditSoultion from './Solution/EditSoultion';
+import EditAdmin from './Admin/EditAdmin';
+import AddAdmin from './Admin/AddAdmin';
+import AddDisease from './Solution/AddDisease';
 
 
 function App() {
@@ -16,6 +22,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<SignUp/>}></Route>
+        <Route path="/customer_edit" element={<Edit/>}></Route>
+        <Route path="/search_view" element={<View/>}></Route>
+        <Route path="/disease_edit" element={<EditSoultion/>}></Route>
+        <Route path="/admin_edit" element={<EditAdmin/>}></Route>
+        <Route path="/add_admin" element={<AddAdmin/>}></Route>
+        <Route path="/add_disease" element={<AddDisease/>}></Route>
         <Route path="/" element={<Layout />}>
           <Route exact path="/" element={<Dashboard />} />
           <Route path="/customer" element={<Customer />} />

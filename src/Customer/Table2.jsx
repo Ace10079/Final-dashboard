@@ -7,29 +7,20 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 function Table2() {
-  const history = useNavigate();
-
-  const goToAccount = () => {
-    history("/customer_edit"); // Assuming '/profile' is the path to your Account component
-  };
-  const [dropdownIndex, setDropdownIndex] = useState(null); // State to manage which dropdown is open
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
-
-  // Function to toggle dropdown visibility for a specific row
+  const [dropdownIndex, setDropdownIndex] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const handleedit=()=>{
+    setShowEditModal(false);
+  }
   const toggleDropdown = (index) => {
     if (dropdownIndex === index) {
-      // Close the dropdown if it's already open
       setDropdownIndex(null);
     } else {
-      // Open the dropdown for the clicked row
       setDropdownIndex(index);
     }
   };
-
-  // Function to handle delete action
   const handleDelete = () => {
-    // Perform deletion action here
-    // For now, let's just close the modal
     setShowModal(false);
   };
 
@@ -81,9 +72,9 @@ function Table2() {
                         style={{ left: "-35px" }}
                       >
                         <button
-                          onClick={goToAccount}
+                          
                           className="block w-full text-left px-4 py-1 hover:bg-gray-200"
-                        >
+                          onClick={() => setShowEditModal(true)}>
                           Edit
                         </button>
                         <div className="border-t border-black"></div>{" "}
@@ -131,6 +122,45 @@ function Table2() {
           >
             Cancel
           </Button>
+        </div>
+      </Modal>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <div className="border w-[400px] lg:ml-[50px] relative rounded border-white">
+          <p className=" font-bold mt-20 text-3xl mb-10 text-center">
+          Edit Customer list
+          </p>
+          <button 
+            className="text-white absolute lg:top-2 top-2 right-4 lg:right-[-40px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
+            onClick={() => setShowEditModal(false)}
+          >
+            X
+          </button>
+          <div className="flex flex-col justify-center items-center">
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Customer Name"
+              />
+            </div>
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Phone Number"
+              />
+            </div>
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Email ID"
+              />
+            </div>
+            <button className="bg-green-800 pl-28 pr-28 pt-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+              Save
+            </button>
+          </div>
         </div>
       </Modal>
     </div>

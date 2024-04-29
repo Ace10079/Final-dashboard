@@ -12,8 +12,6 @@ import Account from './Profile/Account';
 import Edit from './Customer/Edit';
 import View from './Search/View';
 import EditSoultion from './Solution/EditSoultion';
-import EditAdmin from './Admin/EditAdmin';
-import AddAdmin from './Admin/AddAdmin';
 import AddDisease from './Solution/AddDisease';
 
 
@@ -25,8 +23,6 @@ function App() {
         <Route path="/customer_edit" element={<Edit/>}></Route>
         <Route path="/search_view" element={<View/>}></Route>
         <Route path="/disease_edit" element={<EditSoultion/>}></Route>
-        <Route path="/admin_edit" element={<EditAdmin/>}></Route>
-        <Route path="/add_admin" element={<AddAdmin/>}></Route>
         <Route path="/add_disease" element={<AddDisease/>}></Route>
         <Route path="/" element={<Layout />}>
           <Route exact path="/" element={<Dashboard />} />

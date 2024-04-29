@@ -7,18 +7,10 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from 'react-router-dom';
 
 function Table4() {
-  const history = useNavigate();
-  const goToAccount = () => {
-    history('/admin_edit');
-  };
-  const add = useNavigate();
-  const goToAdd = () => {
-    add('/add_admin');
-  };
-  
   const [dropdownIndex, setDropdownIndex] = useState(null);
-  
+  const [showEditModal, setShowEditModal] = useState(false); 
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const toggleDropdown = (index) => {
     if (dropdownIndex === index) {
       setDropdownIndex(null);
@@ -26,17 +18,23 @@ function Table4() {
       setDropdownIndex(index);
     }
   };
+
   const handleDelete = () => {
     setShowModal(false);
   };
-
+const handleedit=()=>{
+  setShowEditModal(false);
+}
+const handleAdd=()=>{
+  setShowAddModal(false);
+}
   return (
     <div className='bg-slate-100 border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
       <div className='flex justify-between'>
         <p className='p-2 font-bold font-[Century Gothic]'>
           User List
         </p>
-        <button className='mr-2 bg-green-500 pl-5 pr-5 rounded-lg font-bold mt-2 text-white' onClick={goToAdd}>Add +</button>
+        <button className='mr-2 bg-green-500 pl-5 pr-5 rounded-lg font-bold mt-2 text-white' onClick={() => setShowAddModal(true)}>Add +</button>
       </div>
       <div className='p-1 mt-1'>
         <Table responsive="sm" bordered>
@@ -70,7 +68,7 @@ function Table4() {
                     />
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-37px" }}>
-                        <button onClick={goToAccount} className="block w-full text-left px-4 py-1 hover:bg-gray-200">
+                        <button onClick={() => setShowEditModal(true)} className="block w-full text-left px-4 py-1 hover:bg-gray-200">
                           Edit
                         </button>
                         <div className="border-t border-black"></div>{" "}
@@ -87,14 +85,13 @@ function Table4() {
         </Table>
       </div>
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-      <button
+        <button
           onClick={() => setShowModal(false)}
           className="text-white absolute lg:left-[460px] lg:top-[10px] right-[4px] top-[4px] font-bold bg-green-600 pl-[7px] pr-2 pt-0.5 pb-0.5 rounded-full"
           style={{ width: "24px", height: "24px", lineHeight: "1" }}
         >
           X
         </button>
-
         <p className="text-2xl text-center pt-5 font-bold">Are you Sure</p>
         <p className="text-xl text-center p-3">
           Are you sure do you want to delete the Admin ID
@@ -112,8 +109,99 @@ function Table4() {
           </Button>
         </div>
       </Modal>
+
+      {/* Edit Modal */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <div className="border w-[400px] lg:ml-[50px] relative rounded border-white">
+          <p className=" font-bold mt-20 text-3xl mb-10 text-center">
+            Edit Admin list
+          </p>
+          <button 
+            className="text-white absolute lg:top-2 top-2 right-4 lg:right-[-40px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
+            onClick={() => setShowEditModal(false)}
+          >
+            X
+          </button>
+          <div className="flex flex-col justify-center items-center">
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Customer Name"
+              />
+            </div>
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Phone Number"
+              />
+            </div>
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Email ID"
+              />
+            </div>
+            <div className="border rounded-lg m-2 w-96">
+              <input
+                type="text"
+                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                placeholder="Role"
+              />
+            </div>
+            <button className="bg-green-800 pl-28 pr-28 pt-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+              Save
+            </button>
+          </div>
+        </div>
+      </Modal>
+       {/* Add Modal */}
+       <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
+       <div>
+      <div className="flex justify-center ">
+      <div className="border w-[400px]  lg:mt-3 mt-[170px] relative border-white rounded">
+        <p className=" font-bold mt-20 text-3xl mb-10 text-center">
+          Add Admin
+        </p>
+        <button className="text-white absolute top-1 right-[-40px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowAddModal(false)}>
+          X
+        </button>
+        <div className="flex flex-col justify-center items-center">
+        <div className="border rounded-lg m-2 w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Admin ID"
+          />
+        </div>
+        <div className="border rounded-lg m-2 w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Email ID"
+          />
+        </div>
+        <div className="border rounded-lg m-2 w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Password"
+          />
+        </div>
+        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+          Save
+        </button>
+        </div>
+        
+      </div>
+    </div>
+    </div>
+       </Modal>
     </div>
   );
 }
 
 export default Table4;
+

@@ -29,7 +29,7 @@ const handleAdd=()=>{
   setShowAddModal(false);
 }
   return (
-    <div className='bg-slate-100 border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
+    <div className='bg-white border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
       <div className='flex justify-between'>
         <p className='p-2 font-bold font-[Century Gothic]'>
           User List
@@ -92,7 +92,7 @@ const handleAdd=()=>{
         >
           X
         </button>
-        <p className="text-2xl text-center pt-5 font-bold">Are you Sure</p>
+        <p className="text-2xl text-center pt-3 font-bold">Are you Sure</p>
         <p className="text-xl text-center p-3">
           Are you sure do you want to delete the Admin ID
         </p>

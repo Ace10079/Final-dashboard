@@ -3,7 +3,7 @@ import React from 'react'
 function Account() {
   return (
     <div>
-    <div className='flex flex-col gap-2 border rounded-lg lg:ml-24 lg:mt-2 lg:w-4/5 mt-10 ml-5 mr-5'>
+    <div className='flex flex-col gap-2 border rounded-lg lg:ml-24 lg:mt-2 lg:w-4/5 mt-10 ml-5 mr-5 bg-white'>
           <div className='flex justify-center'>
               <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />

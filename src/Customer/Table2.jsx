@@ -26,7 +26,7 @@ function Table2() {
 
   return (
     <div
-      className="bg-slate-100 border-solid border-2 rounded-lg m-3"
+      className="bg-white border-solid border-2 rounded-lg m-3"
       style={{ maxHeight: "350px", overflow: "auto" }}
     >
       <div className="flex justify-between">

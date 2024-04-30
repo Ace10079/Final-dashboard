@@ -4,19 +4,19 @@ import Table from 'react-bootstrap/Table';
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from 'react-router-dom';
 
 function Table3() {
-  const history = useNavigate();
 
-  const goToAccount = () => {
-    history('/search_view'); // Assuming '/profile' is the path to your Account component
-  };
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [showModal, setShowModal] = useState(false); 
+  const [showEditModal, setShowEditModal] = useState(false);
   const handleDelete = () => {
     setShowModal(false);
   };
+  const handleedit=()=>{
+    setShowEditModal(false);
+  }
+  
   const toggleDropdown = (index) => {
     if (dropdownIndex === index) {
       setDropdownIndex(null);
@@ -26,7 +26,7 @@ function Table3() {
   };
 
   return (
-    <div className='bg-slate-100 border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
+    <div className='bg-white border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
       <div className='flex justify-between'>
         <p className='p-2 mt-2 font-bold  font-[Century Gothic]' >
           Recently Searched
@@ -75,7 +75,7 @@ function Table3() {
                     />
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-25px" }}>
-                        <button onClick={goToAccount} className="block w-full text-left px-4 py-1 hover:bg-gray-200">
+                        <button onClick={() => setShowEditModal(true)} className="block w-full text-left px-4 py-1 hover:bg-gray-200">
                           View
                         </button>
                         <div className="border-t border-black"></div>{" "}
@@ -119,6 +119,39 @@ function Table3() {
             Cancel
           </Button>
         </div>
+      </Modal>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+      <div className="flex justify-center h-full overflow-y-hidden">
+      <button
+          onClick={() => setShowEditModal(false)}
+          className="text-white absolute lg:left-[460px] lg:top-[10px] right-[4px] top-[4px] font-bold bg-green-600 pl-[7px] pr-2 pt-0.5 pb-0.5 rounded-full"
+          style={{ width: "24px", height: "24px", lineHeight: "1" }}
+        >
+          X
+        </button>
+      <div className="border rounded flex flex-col  gap-2 h-full">
+        <img src="image.jpg" alt="" className="rounded w-full h-[220px]" />
+        <p className="text-black font-bold font-[Century Gothic] pl-2 text-2xl">Kavya</p>
+        <p className="font-bold text-[green] font-[Century Gothic] text-xl pl-2">
+          Leaf Spot
+        </p>
+        <p className="text-[green] font-[Century Gothic] text-xl pl-2">Description</p>
+        <p className="pl-2">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit
+          amet, consectetur adipiscing elit.
+        </p>
+        <p className="text-[green] font-[Century Gothic] pl-2 text-xl">Solution</p>
+        <p className="pl-2 ">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit
+          amet, consectetur adipiscing elit.
+        </p>
+        <button className="pl-20 pr-28 pt-1 pb-1 mt-1 w-3 text-[green] border rounded-lg lg:ml-36 ml-24 lg:mb-3 mb-10 lg:mt-0 mt-3 hover:bg-[green] hover:text-white">
+          Delete
+        </button>
+      </div>
+    </div>
       </Modal>
     </div>
   );

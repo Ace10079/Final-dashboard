@@ -125,32 +125,32 @@ function Table2() {
         </div>
       </Modal>
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
-        <div className="border w-[400px] lg:ml-[50px] relative rounded border-white">
+        <div className="border lg:w-[400px] lg:ml-[50px] rounded border-white">
           <p className=" font-bold mt-20 text-3xl mb-10 text-center">
           Edit Customer list
           </p>
           <button 
-            className="text-white absolute lg:top-2 top-2 right-4 lg:right-[-40px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
+            className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
             onClick={() => setShowEditModal(false)}
           >
             X
           </button>
           <div className="flex flex-col justify-center items-center">
-            <div className="border rounded-lg m-2 w-96">
+            <div className="border rounded-lg m-2 lg:w-96">
               <input
                 type="text"
                 className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                 placeholder="Customer Name"
               />
             </div>
-            <div className="border rounded-lg m-2 w-96">
+            <div className="border rounded-lg m-2 lg:w-96">
               <input
                 type="text"
                 className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                 placeholder="Phone Number"
               />
             </div>
-            <div className="border rounded-lg m-2 w-96">
+            <div className="border rounded-lg m-2 lg:w-96">
               <input
                 type="text"
                 className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"

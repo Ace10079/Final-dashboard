@@ -138,11 +138,11 @@ function Table5() {
         centered
       >
         <div className="flex justify-center p-2">
-          <div className="border  w-[450px] relative border-white rounded">
+          <div className="border  w-[450px] border-white rounded">
             <p className="font-bold mt-10 text-3xl mb-10 text-center">
               Edit Disease & Solution
             </p>
-            <button className="text-white absolute top-2 right-[-10px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowEditModal(false)}>
+            <button className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowEditModal(false)}>
               X
             </button>
             <div className="flex flex-col justify-center items-center">
@@ -182,29 +182,29 @@ function Table5() {
 
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
         <div className="flex justify-center ">
-          <div className="border  relative border-white rounded">
+          <div className="border  border-white rounded">
             <p className=" font-bold mt-10 text-3xl mb-10 text-center">
               Add Disease & Solution
             </p>
-            <button className="text-white absolute top-4 right-[-30px] font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowAddModal(false)}>
+            <button className="text-white absolute lg:top-4 lg:right-4 top-2 right-2  font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowAddModal(false)}>
               X
             </button>
             <div className="flex flex-col justify-center items-center">
-              <div className="border rounded-lg m-2 w-96">
+              <div className="border rounded-lg m-2 lg:w-96">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease Name"
                 />
               </div>
-              <div className="border rounded-lg m-2 w-96 h-24">
+              <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease Solution"
                 />
               </div>
-              <div className="border rounded-lg m-2 w-96 h-24">
+              <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"

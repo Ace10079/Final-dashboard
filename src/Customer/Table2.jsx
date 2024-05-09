@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import { IconDotsVertical } from "@tabler/icons-react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { api } from "../Host";
 
 function Table2() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+ const[data,setData]=useState([])
+  useEffect(() => {
+    console.log(data);
+    fetchData();
+  }, []);
+
   const handleedit=()=>{
     setShowEditModal(false);
   }
@@ -24,6 +32,21 @@ function Table2() {
     setShowModal(false);
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${api}/getall/customer`);
+      console.log("Data :", response);
+      if (response.status === 200) {
+        const responseData = response.data;
+        console.log("ResponseData", responseData);
+        setData(responseData);
+      }
+    } catch (error) {
+      console.error("Error fetching Admin data:", error);
+    }
+  };
+  
+
   return (
     <div
       className="bg-white border-solid border-2 rounded-lg m-3"
@@ -37,6 +60,7 @@ function Table2() {
       </div>
 
       <div className="p-1 mt-2">
+     
         <Table responsive="sm" bordered>
           <thead>
             <tr>
@@ -52,10 +76,10 @@ function Table2() {
             </tr>
           </thead>
           <tbody>
-            {[...Array(7)].map((_, index) => (
+          {data && data.data && data.data.map((customer, index) => (
               <tr key={index}>
                 <td className="border">{index + 1}</td>
-                <td className="border">#543568</td>
+                <td className="border">{customer}</td>
                 <td className="border">Karan</td>
                 <td className="border">20,Mar 04:23</td>
                 <td className="border">00000 00000</td>

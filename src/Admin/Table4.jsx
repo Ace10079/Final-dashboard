@@ -112,50 +112,52 @@ const handleAdd=()=>{
 
       {/* Edit Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
-        <div className="border w-[400px] lg:ml-[50px]  rounded border-white">
-          <p className=" font-bold mt-20 text-3xl mb-10 text-center">
-            Edit Admin list
-          </p>
-          <button 
-            className="text-white absolute lg:top-5 lg:right-3 top-2 right-3 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
-            onClick={() => setShowEditModal(false)}
-          >
-            X
-          </button>
-          <div className="flex flex-col justify-center items-center">
-            <div className="border rounded-lg m-2 lg:w-96">
-              <input
-                type="text"
-                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                placeholder="Customer Name"
-              />
-            </div>
-            <div className="border rounded-lg m-2 lg:w-96">
-              <input
-                type="text"
-                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                placeholder="Phone Number"
-              />
-            </div>
-            <div className="border rounded-lg m-2 lg:w-96">
-              <input
-                type="text"
-                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                placeholder="Email ID"
-              />
-            </div>
-            <div className="border rounded-lg m-2 lg:w-96">
-              <input
-                type="text"
-                className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                placeholder="Role"
-              />
-            </div>
-            <button className="bg-green-800 pl-28 pr-28 pt-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
-              Save
-            </button>
-          </div>
+      <div>
+      <div className="flex justify-center ">
+      <div className="border w-[400px] lg:mt-3  border-white rounded">
+        <p className=" font-bold mt-20 text-3xl mb-10 text-center">
+          Edit Admin List
+        </p>
+        <button className="text-white absolute lg:top-2 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowEditModal(false)}>
+          X
+        </button>
+        <div className="flex flex-col justify-center items-center">
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Customer Name"
+          />
         </div>
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Phone Number"
+          />
+        </div>
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Email Id"
+          />
+        </div>
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Role"
+          />
+        </div>
+        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+          Save
+        </button>
+        </div>
+        
+      </div>
+    </div>
+    </div>
       </Modal>
        {/* Add Modal */}
        <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>

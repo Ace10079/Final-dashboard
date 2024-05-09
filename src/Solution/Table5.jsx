@@ -146,21 +146,21 @@ function Table5() {
               X
             </button>
             <div className="flex flex-col justify-center items-center">
-              <div className="border rounded-lg m-2 w-96">
+              <div className="border rounded-lg m-2 lg:w-96">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease Name"
                 />
               </div>
-              <div className="border rounded-lg m-2 w-96 h-24">
+              <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease"
                 />
               </div>
-              <div className="border rounded-lg m-2 w-96 h-24">
+              <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"

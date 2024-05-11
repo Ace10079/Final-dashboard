@@ -87,15 +87,18 @@ function Table2() {
           <tbody>
             {data.map((customer, index) => (
               <tr key={index}>
-                <td className="border">{serialNumber + index}</td> {/* Use serialNumber and index */}
-                <td className="border">{customer.user_id.substring(0, 5)}</td>
+                <td className="border">{serialNumber + index}</td> 
+                <td className="border">{customer.user_id.substring(0, 10)}</td>
                 <td className="border">{customer.fname} {customer.lname}</td>
-               <td className="border">{formatTime(customer.time)}</td>
+                <td className="border">{formatTime(customer.time)}</td>
                 <td className="border">{customer.phone}</td>
                 <td className="border">{customer.email}</td>
                 <td className="border">
                   <div className="relative">
-                    <IconDotsVertical stroke={1} />
+                    <IconDotsVertical stroke={1} 
+                     onClick={() => toggleDropdown(index)}
+                     />
+                   
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-35px" }}>
                         <button className="block w-full text-left px-4 py-1 hover:bg-gray-200" onClick={() => setShowEditModal(true)}>

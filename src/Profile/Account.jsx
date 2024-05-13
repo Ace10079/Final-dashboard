@@ -15,7 +15,7 @@ function Account() {
           <div className='border rounded-lg m-2 '>
           <input
                       type="text"
-                      className="w-96 px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                      className="w-full px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                       placeholder="Profile Name"
                   />
           </div>

@@ -13,24 +13,31 @@ function Table2() {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [data, setData] = useState([]);
-  const [serialNumber, setSerialNumber] = useState(1); // Initialize serial number
+  const [serialNumber, setSerialNumber] = useState(1); 
 
   function formatTime(timeString) {
-    // Split the time string by space to separate time and timezone
     const [timePart] = timeString.split(' ');
-  
-    // Extract the hour and minute from the time part
     const [hours, minutes, seconds] = timePart.split(':');
-  
-    // Convert hours to 12-hour format
     let formattedHours = parseInt(hours, 10);
     const ampm = formattedHours >= 12 ? 'PM' : 'AM';
     formattedHours = formattedHours % 12;
-    formattedHours = formattedHours || 12; // Handle midnight (0 hours)
+    formattedHours = formattedHours || 12; 
   
-    // Format the time as HH:MM AM/PM
+ 
     return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
   }
+  const handleDelete = async () => {
+    try {
+      const emailToDelete = data[dropdownIndex].email; // Assuming email is stored in 'email' field
+      const response = await axios.delete(`${api}/deletecustomer`, { data: { email: emailToDelete } });
+      if (response.status === 200) {
+        fetchData(); // Refresh the data after successful deletion
+        setShowModal(false); // Close the modal after deletion
+      }
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -46,10 +53,6 @@ function Table2() {
     } else {
       setDropdownIndex(index);
     }
-  };
-
-  const handleDelete = () => {
-    setShowModal(false);
   };
 
   const fetchData = async () => {
@@ -89,7 +92,7 @@ function Table2() {
               <tr key={index}>
                 <td className="border">{serialNumber + index}</td> 
                 <td className="border">{customer.user_id.substring(0, 10)}</td>
-                <td className="border">{customer.fname} {customer.lname}</td>
+                <td className="border">{customer.fname}</td>
                 <td className="border">{formatTime(customer.time)}</td>
                 <td className="border">{customer.phone}</td>
                 <td className="border">{customer.email}</td>

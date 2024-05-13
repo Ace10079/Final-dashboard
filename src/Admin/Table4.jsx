@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import { IconDotsVertical } from '@tabler/icons-react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { api } from "../Host";
+
 
 function Table4() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false); 
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [data, setData] = useState([]);
+  const [serialNumber, setSerialNumber] = useState(1); 
+
+
+  function formatTime(timeString) {
+    const [timePart] = timeString.split(' ');
+    const [hours, minutes, seconds] = timePart.split(':');
+    let formattedHours = parseInt(hours, 10);
+    const ampm = formattedHours >= 12 ? 'PM' : 'AM';
+    formattedHours = formattedHours % 12;
+    formattedHours = formattedHours || 12; 
+  
+ 
+    return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+
   const toggleDropdown = (index) => {
     if (dropdownIndex === index) {
       setDropdownIndex(null);
@@ -19,8 +44,17 @@ function Table4() {
     }
   };
 
-  const handleDelete = () => {
-    setShowModal(false);
+  const handleDelete = async () => {
+    try {
+      const emailToDelete = data[dropdownIndex].email;
+      const response = await axios.delete(`${api}/deleteadmin`, { data: { email: emailToDelete } });
+      if (response.status === 200) {
+        fetchData(); 
+        setShowModal(false); 
+      }
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
   };
 const handleedit=()=>{
   setShowEditModal(false);
@@ -28,6 +62,21 @@ const handleedit=()=>{
 const handleAdd=()=>{
   setShowAddModal(false);
 }
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`${api}/getall/admin`);
+    if (response.status === 200) {
+      const responseData = response.data.data;
+      setData(responseData);
+    }
+  } catch (error) {
+    console.error("Error fetching Admin data:", error);
+  }
+};
+
+
+
   return (
     <div className='bg-white border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
       <div className='flex justify-between'>
@@ -51,14 +100,14 @@ const handleAdd=()=>{
             </tr>
           </thead>
           <tbody>
-            {[...Array(6)].map((_, index) => (
+          {data.map((admin, index) => (
               <tr key={index}>
-                <td className="border text-center">{index + 1}</td>
-                <td className="border text-center">#543568</td>
-                <td className="border text-center">Karan</td>
-                <td className="border text-center">00000 00000</td>
-                <td className="border text-center">minions10karan@gmail.com</td>
-                <td className="border text-center">20,Mar 04:23</td>
+                <td className="border text-center">{serialNumber + index}</td>
+                <td className="border text-center">{admin.admin_id.substring(0, 10)}</td>
+                <td className="border text-center">{admin.name}</td>
+                <td className="border text-center">{admin.phone}</td>
+                <td className="border text-center">{admin.email}</td>
+                <td className="border text-center">{formatTime(admin.time)}</td>
                 <td className="border text-center">lorem ipsum</td>
                 <td className="border text-center">
                   <div className="relative">

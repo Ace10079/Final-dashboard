@@ -91,7 +91,7 @@ function Table2() {
             {data.map((customer, index) => (
               <tr key={index}>
                 <td className="border">{serialNumber + index}</td> 
-                <td className="border">{customer.user_id.substring(0, 10)}</td>
+                <td className="border">{customer.user_id.substring(0, 8)}</td>
                 <td className="border">{customer.fname}</td>
                 <td className="border">{formatTime(customer.time)}</td>
                 <td className="border">{customer.phone}</td>

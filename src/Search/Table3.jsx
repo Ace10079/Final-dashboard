@@ -1,18 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+import { api } from "../Host";
 
 function Table3() {
 
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [showModal, setShowModal] = useState(false); 
   const [showEditModal, setShowEditModal] = useState(false);
-  const handleDelete = () => {
-    setShowModal(false);
+  const [data, setData] = useState([]);
+  const [serialNumber, setSerialNumber] = useState(1); 
+
+  function formatTime(timeString) {
+    const [timePart] = timeString.split(' ');
+    const [hours, minutes, seconds] = timePart.split(':');
+    let formattedHours = parseInt(hours, 10);
+    const ampm = formattedHours >= 12 ? 'PM' : 'AM';
+    formattedHours = formattedHours % 12;
+    formattedHours = formattedHours || 12; 
+  
+ 
+    return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
+  }
+
+
+ const handleDelete = async () => {
+    try {
+      const nameToDelete = data[dropdownIndex].name; 
+      const response = await axios.delete(`${api}/deleteimage`, { data: { name: nameToDelete } });
+      if (response.status === 200) {
+        fetchData(); 
+        setShowModal(false); 
+      }
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${api}/getall/image`);
+      if (response.status === 200) {
+        const responseData = response.data.data;
+        setData(responseData);
+      }
+    } catch (error) {
+      console.error("Error fetching Admin data:", error);
+    }
+  };
+
   const handleedit=()=>{
     setShowEditModal(false);
   }
@@ -59,14 +103,16 @@ function Table3() {
             </tr>
           </thead>
           <tbody>
-            {[...Array(6)].map((_, index) => (
+          {data.map((image, index) => (
               <tr key={index}>
-                <td className="border text-center">{index + 1}</td>
-                <td className="border text-center">#543568</td>
-                <td className="border text-center">Karan</td>
-                <td className="border text-center">00000 00000</td>
-                <td className="border text-center">20,Mar 04:23</td>
-                <td className="border text-center">lorem ipsum</td>
+                <td className="border text-center">{serialNumber + index}</td>
+                <td className="border text-center">{image.Image_id.substring(0, 10)}</td>
+                <td className="border text-center">{image.name}</td>
+                <td className="border text-center">{image.dis_name}</td>
+                <td className="border text-center">{formatTime(image.time)}{image.date}</td>
+                <td className="border text-center">
+  <img src={`${image.img}`} alt="Image" className="img-thumbnail" style={{ width: '100px' }} />
+</td>
                 <td className="border text-center">
                   <div className="relative">
                     <IconDotsVertical

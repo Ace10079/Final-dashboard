@@ -14,7 +14,7 @@ function Sidebar() {
         <div className="lg:relative relative">
             <div className={`${open ? "lg:w-[220px] w-[150px] h-screen lg:static absolute" : "lg:w-[50px] w-[0px] h-[0px] "} duration-300 lg:bg-green-700 bg-green-700 lg:h-screen sidebar-text`} >
                 <div className='flex justify-between relative'>
-                    <h1 className={`ml-16 pt-3 ${open ? 'lg:text-[40px] hidden' : 'lg:text-[0px] hidden'} sm:block`}>Logo</h1>
+                    <h1 className={`ml-16 pt-3 ${open ? 'lg:text-[40px] hidden' : 'lg:text-[0px] hidden'} sm:block`}>Oryza</h1>
                     <IconMenuDeep stroke={2} className={`absolute ${open ? "lg:left-56 lg:top-2 lg:text-black text-black" : "lg:top-2 lg:text-white lg:left-2 "} left-2 top-2`} onClick={() => setOpen(!open)} />
                 </div>
                 <div className='flex lg:justify-center'>

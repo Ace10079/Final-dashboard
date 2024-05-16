@@ -13,28 +13,32 @@ function Table5() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [data, setData] = useState([]);
-  const [serialNumber, setSerialNumber] = useState(1); 
+  const [serialNumber, setSerialNumber] = useState(1);
 
+  const [newDiseaseName, setNewDiseaseName] = useState("");
+  const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
+  const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
 
   function formatTime(timeString) {
-    const [timePart] = timeString.split(' ');
-    const [hours, minutes, seconds] = timePart.split(':');
+    const [timePart] = timeString.split(" ");
+    const [hours, minutes, seconds] = timePart.split(":");
     let formattedHours = parseInt(hours, 10);
-    const ampm = formattedHours >= 12 ? 'PM' : 'AM';
+    const ampm = formattedHours >= 12 ? "PM" : "AM";
     formattedHours = formattedHours % 12;
-    formattedHours = formattedHours || 12; 
-  
- 
-    return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
+    formattedHours = formattedHours || 12;
+
+    return `${formattedHours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
   }
 
- const handleDelete = async () => {
+  const handleDelete = async () => {
     try {
-      const diseaseToDelete = data[dropdownIndex].disname; 
-      const response = await axios.delete(`${api}/deletedisease`, { data: { disname: diseaseToDelete } });
+      const diseaseToDelete = data[dropdownIndex].disname;
+      const response = await axios.delete(`${api}/deletedisease`, {
+        data: { disname: diseaseToDelete },
+      });
       if (response.status === 200) {
-        fetchData(); 
-        setShowModal(false); 
+        fetchData();
+        setShowModal(false);
       }
     } catch (error) {
       console.error("Error deleting customer:", error);
@@ -70,6 +74,26 @@ function Table5() {
     }
   };
 
+  const handleAddDisease = async () => {
+    try {
+      const response = await axios.post(`${api}/disease/register`, {
+        disname: newDiseaseName,
+        desc: newDiseaseDesc,
+        solution: newDiseaseSolution,
+      });
+
+      if (response.status === 201) {
+        fetchData(); // Fetch updated data
+        setShowAddModal(false); // Close the modal
+        setNewDiseaseName(""); // Reset form fields
+        setNewDiseaseDesc("");
+        setNewDiseaseSolution("");
+      }
+    } catch (error) {
+      console.error("Error adding disease:", error);
+    }
+  };
+
   return (
     <div
       className="bg-white border-solid border-2 rounded-lg m-3"
@@ -101,10 +125,12 @@ function Table5() {
             </tr>
           </thead>
           <tbody>
-          {data.map((disease, index) => (
+            {data.map((disease, index) => (
               <tr key={index}>
                 <td className="border text-center">{serialNumber + index}</td>
-                <td className="border text-center">{disease.dis_id.substring(0,7)}</td>
+                <td className="border text-center">
+                  {disease.dis_id.substring(0, 7)}
+                </td>
                 <td className="border text-center">{disease.disname}</td>
                 <td className="border text-center">{disease.desc}</td>
                 <td className="border text-center">{disease.solution}</td>
@@ -185,7 +211,10 @@ function Table5() {
             <p className="font-bold mt-10 text-3xl mb-10 text-center">
               Edit Disease & Solution
             </p>
-            <button className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowEditModal(false)}>
+            <button
+              className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
+              onClick={() => setShowEditModal(false)}
+            >
               X
             </button>
             <div className="flex flex-col justify-center items-center">
@@ -229,32 +258,44 @@ function Table5() {
             <p className=" font-bold mt-10 text-3xl mb-10 text-center">
               Add Disease & Solution
             </p>
-            <button className="text-white absolute lg:top-4 lg:right-4 top-2 right-2  font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowAddModal(false)}>
+            <button
+              className="text-white absolute lg:top-4 lg:right-4 top-2 right-2  font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
+              onClick={() => setShowAddModal(false)}
+            >
               X
             </button>
             <div className="flex flex-col justify-center items-center">
               <div className="border rounded-lg m-2 lg:w-96">
                 <input
                   type="text"
-                  className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease Name"
+                  value={newDiseaseName}
+                  onChange={(e) => setNewDiseaseName(e.target.value)}
                 />
               </div>
               <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
-                  className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  placeholder="Disease Solution"
+                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                  placeholder="Description"
+                  value={newDiseaseDesc}
+                  onChange={(e) => setNewDiseaseDesc(e.target.value)}
                 />
               </div>
               <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
-                  className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Solution"
+                  value={newDiseaseSolution}
+                  onChange={(e) => setNewDiseaseSolution(e.target.value)}
                 />
               </div>
-              <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+              <button
+                className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
+                onClick={handleAddDisease}
+              >
                 Save
               </button>
             </div>

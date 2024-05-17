@@ -71,7 +71,6 @@ function Table2() {
     <div className="bg-white border-solid border-2 rounded-lg m-3" style={{ maxHeight: "350px", overflow: "auto" }}>
       <div className="flex justify-between">
         <p className="p-2 font-bold font-[Century Gothic]">Customer List</p>
-        <button className="mr-2 bg-green-500 pl-5 pr-5 rounded-lg font-bold mt-2 text-white">Add +</button>
       </div>
 
       <div className="p-1 mt-2">

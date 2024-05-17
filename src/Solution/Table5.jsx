@@ -18,6 +18,7 @@ function Table5() {
   const [newDiseaseName, setNewDiseaseName] = useState("");
   const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
   const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
+  
 
   function formatTime(timeString) {
     const [timePart] = timeString.split(" ");

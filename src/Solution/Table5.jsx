@@ -18,6 +18,12 @@ function Table5() {
   const [newDiseaseName, setNewDiseaseName] = useState("");
   const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
   const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
+
+  const [currentDisease, setCurrentDisease] = useState({
+    disname: "",
+    desc: "",
+    solution: "",
+});
   
 
   function formatTime(timeString) {
@@ -72,6 +78,24 @@ function Table5() {
       }
     } catch (error) {
       console.error("Error fetching Admin data:", error);
+    }
+  };
+
+  const handleEditDisease = async () => {
+    try {
+      setCurrentDisease({ ...currentDisease, desc, solution }); // Update state
+      const response = await axios.put(`${api}/updatedisease`, {
+        disname: currentDisease.disname,
+        desc,
+        solution,
+      });
+
+      if (response.status === 200) {
+        fetchData();
+        setShowEditModal(false);
+      }
+    } catch (error) {
+      console.error("Error updating disease:", error);
     }
   };
 
@@ -144,13 +168,13 @@ function Table5() {
                     {dropdownIndex === index && (
                       <div
                         className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border"
-                        style={{ left: "-5px" }}
+                        style={{ left: "-10px" }}
                       >
                         <button
                           onClick={() => setShowEditModal(true)}
                           className="block w-full text-left px-4 py-1 hover:bg-gray-200"
                         >
-                          View
+                          Edit
                         </button>
                         <div className="border-t border-black"></div>{" "}
                         {/* Black line separator */}
@@ -224,27 +248,37 @@ function Table5() {
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Disease Name"
+                  value={currentDisease.disname || ""}
+                  readOnly
                 />
               </div>
               <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
                   className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  placeholder="Disease"
+                  placeholder="Description"
+                  value={currentDisease.desc || ""}
+                        onChange={(e) =>
+                            setCurrentDisease({ ...currentDisease, desc: e.target.value })
+                        }
                 />
               </div>
               <div className="border rounded-lg m-2 lg:w-96 h-24">
                 <input
                   type="text"
-                  className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
                   placeholder="Solution"
+                  value={currentDisease.solution || ""}
+                        onChange={(e) =>
+                            setCurrentDisease({ ...currentDisease, solution: e.target.value })
+                        }
                 />
               </div>
               <div className="flex lg:gap-2 lg:flex-row flex-col gap-3">
                 <button className=" pl-20 pr-20 pt-2 pb-2 lg:mb-10 lg:mt-10 text-green-800 border rounded-lg border-black">
                   Delete
                 </button>
-                <button className="bg-green-800 pl-20 pr-20 pt-2 pb-2 mb-10 lg:mt-10  text-white border rounded-lg">
+                <button className="bg-green-800 pl-20 pr-20 pt-2 pb-2 mb-10 lg:mt-10  text-white border rounded-lg" onClick={handleEditDisease}>
                   Save
                 </button>
               </div>

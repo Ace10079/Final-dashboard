@@ -9,7 +9,7 @@ function SignUp() {
           <p className="lg:mt-2 mt-2 text-white text-lg lg:ml-2 ml-2">Sign in to Continue your Search</p>
         </div>
         <img
-          src="login.png"
+          src="./login.png"
           alt=""
           className="absolute lg:top-8 lg:left-[500px] lg:h-[230px] lg:w-[300px] h-[200px] w-[180px] left-[310px] top-10"
         />

@@ -289,7 +289,7 @@ function Table5() {
                 />
               </div>
               <button
-                className="bg-green-800 pl-28 pr-28 pt-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
+                className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
                 onClick={handleEditDisease}
               >
                 Save
@@ -341,7 +341,7 @@ function Table5() {
                 />
               </div>
               <button
-                className="bg-green-500 rounded-lg m-2 w-[150px] font-bold text-white"
+                className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
                 onClick={handleAddDisease}
               >
                 Add Disease

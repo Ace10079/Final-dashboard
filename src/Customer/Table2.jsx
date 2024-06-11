@@ -13,19 +13,21 @@ function Table2() {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [data, setData] = useState([]);
-  const [serialNumber, setSerialNumber] = useState(1); 
+  const [serialNumber, setSerialNumber] = useState(1);
+  const [editUserData, setEditUserData] = useState({ fname: "", phone: "", email: "" });
+  const [selectedUser, setSelectedUser] = useState(null);
 
   function formatTime(timeString) {
-    const [timePart] = timeString.split(' ');
-    const [hours, minutes, seconds] = timePart.split(':');
+    const [timePart] = timeString.split(" ");
+    const [hours, minutes, seconds] = timePart.split(":");
     let formattedHours = parseInt(hours, 10);
-    const ampm = formattedHours >= 12 ? 'PM' : 'AM';
+    const ampm = formattedHours >= 12 ? "PM" : "AM";
     formattedHours = formattedHours % 12;
-    formattedHours = formattedHours || 12; 
-  
- 
-    return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
+    formattedHours = formattedHours || 12;
+
+    return `${formattedHours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
   }
+
   const handleDelete = async () => {
     try {
       const emailToDelete = data[dropdownIndex].email; // Assuming email is stored in 'email' field
@@ -43,8 +45,14 @@ function Table2() {
     fetchData();
   }, []);
 
-  const handleedit = () => {
-    setShowEditModal(false);
+  const handleEdit = (index) => {
+    setSelectedUser(data[index]);
+    setEditUserData({
+      fname: data[index].fname,
+      phone: data[index].phone,
+      email: data[index].email,
+    });
+    setShowEditModal(true);
   };
 
   const toggleDropdown = (index) => {
@@ -67,6 +75,30 @@ function Table2() {
     }
   };
 
+  const handleSaveEdit = async () => {
+    try {
+      const response = await axios.put(`${api}/update/customer`, {
+        email: editUserData.email,
+        fname: editUserData.fname,
+        phone: editUserData.phone,
+      });
+      if (response.status === 200) {
+        fetchData(); 
+        setShowEditModal(false); 
+      }
+    } catch (error) {
+      console.error("Error updating customer:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditUserData({
+      ...editUserData,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="bg-white border-solid border-2 rounded-lg m-3" style={{ maxHeight: "350px", overflow: "auto" }}>
       <div className="flex justify-between">
@@ -83,13 +115,15 @@ function Table2() {
               <th className="border">Date & Time</th>
               <th className="border">Phone Number</th>
               <th className="border">Email ID</th>
-              <th className="border"><IconDotsVertical stroke={1} /></th>
+              <th className="border">
+                <IconDotsVertical stroke={1} />
+              </th>
             </tr>
           </thead>
           <tbody>
             {data.map((customer, index) => (
               <tr key={index}>
-                <td className="border">{serialNumber + index}</td> 
+                <td className="border">{serialNumber + index}</td>
                 <td className="border">{customer.user_id.substring(0, 8)}</td>
                 <td className="border">{customer.fname}</td>
                 <td className="border">{formatTime(customer.time)}</td>
@@ -97,13 +131,11 @@ function Table2() {
                 <td className="border">{customer.email}</td>
                 <td className="border">
                   <div className="relative">
-                    <IconDotsVertical stroke={1} 
-                     onClick={() => toggleDropdown(index)}
-                     />
-                   
+                    <IconDotsVertical stroke={1} onClick={() => toggleDropdown(index)} />
+
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-35px" }}>
-                        <button className="block w-full text-left px-4 py-1 hover:bg-gray-200" onClick={() => setShowEditModal(true)}>
+                        <button className="block w-full text-left px-4 py-1 hover:bg-gray-200" onClick={() => handleEdit(index)}>
                           Edit
                         </button>
                         <div className="border-t border-black"></div> {/* Black line separator */}
@@ -137,21 +169,42 @@ function Table2() {
       </Modal>
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
         <div className="border lg:w-[400px] lg:ml-[50px] rounded border-white">
-          <p className=" font-bold mt-20 text-3xl mb-10 text-center">Edit Customer list</p>
+          <p className="font-bold mt-20 text-3xl mb-10 text-center">Edit Customer list</p>
           <button className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full" onClick={() => setShowEditModal(false)}>
             X
           </button>
           <div className="flex flex-col justify-center items-center">
             <div className="border rounded-lg m-2 lg:w-96">
-              <input type="text" className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black" placeholder="Customer Name" />
+              <input
+                type="text"
+                className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                name="fname"
+                value={editUserData.fname}
+                onChange={handleInputChange}
+                placeholder="Customer Name"
+              />
             </div>
             <div className="border rounded-lg m-2 lg:w-96">
-              <input type="text" className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black" placeholder="Phone Number" />
+              <input
+                type="text"
+                className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                name="phone"
+                value={editUserData.phone}
+                onChange={handleInputChange}
+                placeholder="Phone Number"
+              />
             </div>
             <div className="border rounded-lg m-2 lg:w-96">
-              <input type="text" className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black" placeholder="Email ID" />
+              <input
+                type="text"
+                className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+                name="email"
+                value={editUserData.email}
+                onChange={handleInputChange}
+                placeholder="Email ID"
+              />
             </div>
-            <button className="bg-green-800 pl-28 pr-28 pt-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+            <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1 mb-10 mt-10 text-white border rounded-lg" onClick={handleSaveEdit}>
               Save
             </button>
           </div>
@@ -161,4 +214,4 @@ function Table2() {
   );
 }
 
-export default Table2
+export default Table2;

@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function SignUp() {
+  const navigate = useNavigate();
+  const handledashboard = ()=>{
+navigate('/dashboard');
+console.log('button clicked');
+  }
   return (
     <div className="flex lg:justify-center">
       <div className="relative lg:w-[765px] lg:h-[100px] w-[520px]">
@@ -23,7 +30,7 @@ function SignUp() {
           className="absolute lg:top-[320px] lg:left-[16px] lg:w-96 rounded-md focus:outline-none focus:border-blue-500 text-black border border-black lg:p-3 lg:ml-36 top-[330px] left-[130px] p-3"
           placeholder="Enter Otp"
         />
-        <button className="bg-green-800 lg:pl-20 lg:pr-20 lg:pt-2 lg:pb-2 absolute lg:top-[400px] lg:left-64 text-white border rounded-lg top-[420px] left-[170px] pl-10 pr-10 pt-1 pb-1">
+        <button className="bg-green-800 lg:pl-20 lg:pr-20 lg:pt-2 lg:pb-2 absolute lg:top-[400px] lg:left-64 text-white border rounded-lg top-[420px] left-[170px] pl-10 pr-10 pt-1 pb-1" onClick={handledashboard}>
           Login
         </button>
       </div>

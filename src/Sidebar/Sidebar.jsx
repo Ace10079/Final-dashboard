@@ -4,7 +4,7 @@ import { IconMenuDeep, IconDashboard, IconUser, IconSearch, IconUsers,IconLayout
 
 function Sidebar() {
     const [open, setOpen] = useState(true);
-    const [activeItem, setActiveItem] = useState('dashboard'); // Set initial active item to 'dashboard'
+    const [activeItem, setActiveItem] = useState('dashboard'); 
 
     const handleItemClick = (itemName) => {
         setActiveItem(itemName);
@@ -21,7 +21,7 @@ function Sidebar() {
                     <ul className='lg:pt-9 lg:pl-2 pt-11 pl-2 flex flex-col lg:gap-9 gap-4 text-white justify-items-center'>
                         <div className='flex justify-between'>
                             <li className={`${activeItem === 'dashboard' ? 'text-white' : 'text-opacity-40'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
-                                <Link to="/" onClick={() => handleItemClick('dashboard')}>Dashboard</Link>
+                                <Link to="/dashboard" onClick={() => handleItemClick('dashboard')}>Dashboard</Link>
                             </li>
                             <IconLayoutDashboard stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>

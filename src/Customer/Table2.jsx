@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api } from "../Host";
+import "../index.css"; 
 
 function Table2() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
@@ -16,6 +17,8 @@ function Table2() {
   const [serialNumber, setSerialNumber] = useState(1);
   const [editUserData, setEditUserData] = useState({ fname: "", phone: "", email: "" });
   const [selectedUser, setSelectedUser] = useState(null);
+  const [notification, setNotification] = useState({ message: "", type: "" });
+  const [showNotification, setShowNotification] = useState(false);
 
   function formatTime(timeString) {
     const [timePart] = timeString.split(" ");
@@ -35,9 +38,11 @@ function Table2() {
       if (response.status === 200) {
         fetchData(); // Refresh the data after successful deletion
         setShowModal(false); // Close the modal after deletion
+        displayNotification("Customer deleted successfully", "success");
       }
     } catch (error) {
       console.error("Error deleting customer:", error);
+      displayNotification("Error deleting customer", "error");
     }
   };
 
@@ -83,11 +88,13 @@ function Table2() {
         phone: editUserData.phone,
       });
       if (response.status === 200) {
-        fetchData(); 
-        setShowEditModal(false); 
+        fetchData();
+        setShowEditModal(false);
+        displayNotification("Customer updated successfully", "success");
       }
     } catch (error) {
       console.error("Error updating customer:", error);
+      displayNotification("Error updating customer", "error");
     }
   };
 
@@ -97,6 +104,14 @@ function Table2() {
       ...editUserData,
       [name]: value,
     });
+  };
+
+  const displayNotification = (message, type) => {
+    setNotification({ message, type });
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000); // Hide after 3 seconds
   };
 
   return (
@@ -210,6 +225,11 @@ function Table2() {
           </div>
         </div>
       </Modal>
+      <div className={`notification-container ${showNotification ? "notification-show" : ""} ${notification.type === 'success' ? 'notification-success' : 'notification-error'}`}>
+        <div className="notification-content">
+          {notification.message}
+        </div>
+      </div>
     </div>
   );
 }

@@ -193,7 +193,7 @@ function Table3() {
           dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit
           amet, consectetur adipiscing elit.
         </p>
-        <button className="pl-20 pr-28 pt-1 pb-1 mt-1 w-3 text-[green] border rounded-lg lg:ml-36 ml-24 lg:mb-3 mb-10 lg:mt-0 mt-3 hover:bg-[green] hover:text-white">
+        <button className="pl-20 pr-28 pt-1 pb-1 w-3 text-[green] border rounded-lg lg:ml-36 ml-24 lg:mb-3 mb-10 lg:mt-0 mt-3 hover:bg-[green] hover:text-white">
           Delete
         </button>
       </div>

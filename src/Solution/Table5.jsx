@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { api } from "../Host";
+import "../index.css"; 
 
 function Table5() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
@@ -18,6 +19,8 @@ function Table5() {
   const [newDiseaseName, setNewDiseaseName] = useState("");
   const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
   const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
+  const [notification, setNotification] = useState({ message: "", type: "" });
+  const [showNotification, setShowNotification] = useState(false);
 
   const [currentDisease, setCurrentDisease] = useState({
     disname: "",
@@ -27,7 +30,7 @@ function Table5() {
 
   function formatTime(timeString) {
     const [timePart] = timeString.split(" ");
-    const [hours, minutes, seconds] = timePart.split(":");
+    const [hours, minutes] = timePart.split(":");
     let formattedHours = parseInt(hours, 10);
     const ampm = formattedHours >= 12 ? "PM" : "AM";
     formattedHours = formattedHours % 12;
@@ -35,6 +38,14 @@ function Table5() {
 
     return `${formattedHours.toString().padStart(2, "0")}:${minutes} ${ampm}`;
   }
+
+  const displayNotification = (message, type) => {
+    setNotification({ message, type });
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   const handleDelete = async () => {
     try {
@@ -45,9 +56,11 @@ function Table5() {
       if (response.status === 200) {
         fetchData();
         setShowModal(false);
+        displayNotification("Disease deleted successfully", "success");
       }
     } catch (error) {
       console.error("Error deleting disease:", error);
+      displayNotification("Error deleting disease", "error");
     }
   };
 
@@ -96,9 +109,11 @@ function Table5() {
       if (response.status === 200) {
         fetchData();
         setShowEditModal(false);
+        displayNotification("Disease updated successfully", "success");
       }
     } catch (error) {
       console.error("Error updating disease:", error);
+      displayNotification("Error updating disease", "error");
     }
   };
 
@@ -116,9 +131,11 @@ function Table5() {
         setNewDiseaseName("");
         setNewDiseaseDesc("");
         setNewDiseaseSolution("");
+        displayNotification("Disease added successfully", "success");
       }
     } catch (error) {
       console.error("Error adding disease:", error);
+      displayNotification("Error adding disease", "error");
     }
   };
 
@@ -350,6 +367,13 @@ function Table5() {
           </div>
         </div>
       </Modal>
+
+      {/* Notification */}
+      <div className={`notification-container ${showNotification ? "notification-show" : ""} ${notification.type === 'success' ? 'notification-success' : 'notification-error'}`}>
+        <div className="notification-content">
+          {notification.message}
+        </div>
+      </div>
     </div>
   );
 }

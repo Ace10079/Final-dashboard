@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { api } from "../Host";
-
+import "../index.css"; 
 
 function Table4() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
@@ -16,7 +16,8 @@ function Table4() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [data, setData] = useState([]);
   const [serialNumber, setSerialNumber] = useState(1); 
-
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   function formatTime(timeString) {
     const [timePart] = timeString.split(' ');
@@ -25,8 +26,6 @@ function Table4() {
     const ampm = formattedHours >= 12 ? 'PM' : 'AM';
     formattedHours = formattedHours % 12;
     formattedHours = formattedHours || 12; 
-  
- 
     return `${formattedHours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
   }
 
@@ -34,7 +33,13 @@ function Table4() {
     fetchData();
   }, []);
 
-
+  const displayNotification = (message, type) => {
+    setNotification({ message, type });
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   const toggleDropdown = (index) => {
     if (dropdownIndex === index) {
@@ -50,32 +55,37 @@ function Table4() {
       const response = await axios.delete(`${api}/deleteadmin`, { data: { email: emailToDelete } });
       if (response.status === 200) {
         fetchData(); 
-        setShowModal(false); 
+        setShowModal(false);
+        displayNotification('Admin deleted successfully', 'success');
       }
     } catch (error) {
       console.error("Error deleting customer:", error);
+      displayNotification('Error deleting admin', 'error');
     }
   };
-const handleedit=()=>{
-  setShowEditModal(false);
-}
-const handleAdd=()=>{
-  setShowAddModal(false);
-}
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get(`${api}/getall/admin`);
-    if (response.status === 200) {
-      const responseData = response.data.data;
-      setData(responseData);
+  const handleEdit = () => {
+    setShowEditModal(false);
+    displayNotification('Admin details edited successfully', 'success');
+  };
+
+  const handleAdd = () => {
+    setShowAddModal(false);
+    displayNotification('Admin added successfully', 'success');
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${api}/getall/admin`);
+      if (response.status === 200) {
+        const responseData = response.data.data;
+        setData(responseData);
+      }
+    } catch (error) {
+      console.error("Error fetching Admin data:", error);
+      displayNotification('Error fetching admin data', 'error');
     }
-  } catch (error) {
-    console.error("Error fetching Admin data:", error);
-  }
-};
-
-
+  };
 
   return (
     <div className='bg-white border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
@@ -199,7 +209,7 @@ const fetchData = async () => {
             placeholder="Role"
           />
         </div>
-        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg" onClick={handleEdit}>
           Save
         </button>
         </div>
@@ -241,7 +251,7 @@ const fetchData = async () => {
             placeholder="Password"
           />
         </div>
-        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg">
+        <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg" onClick={handleAdd}>
           Save
         </button>
         </div>
@@ -250,9 +260,15 @@ const fetchData = async () => {
     </div>
     </div>
        </Modal>
+
+      {/* Notification */}
+      <div className={`notification-container ${showNotification ? "notification-show" : ""} ${notification.type === 'success' ? 'notification-success' : 'notification-error'}`}>
+        <div className="notification-content">
+          {notification.message}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default Table4;
-

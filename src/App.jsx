@@ -9,13 +9,14 @@ import Solution from './Solution/Solution';
 import Layout from './Layout/Layout';
 import SignUp from './SignUp/SignUp';
 import Account from './Profile/Account';
+import EmailLogin from './SignUp/EmailLogin';
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<SignUp/>}></Route>
+        <Route path="" element={<EmailLogin/>}></Route>
         <Route path="/" element={<Layout/>}>
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="/customer" element={<Customer />} />

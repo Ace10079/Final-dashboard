@@ -111,7 +111,7 @@ function Table3() {
                 <td className="border text-center">{image.dis_name}</td>
                 <td className="border text-center">{formatTime(image.time)}{image.date}</td>
                 <td className="border text-center">
-  <img src={`${image.img}`} alt="Image" className="img-thumbnail" style={{ width: '100px' }} />
+  <img src={`${api}/${image.img}`} alt="Image" className="img-thumbnail" style={{ width: '100px' }} />
 </td>
                 <td className="border text-center">
                   <div className="relative">

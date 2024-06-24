@@ -18,6 +18,18 @@ function Table4() {
   const [serialNumber, setSerialNumber] = useState(1); 
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ message: '', type: '' });
+  const initialNewAdminState = {
+    admin_id: '',
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+    role: '',
+    img: ''
+  };
+
+  const [newAdmin, setNewAdmin] = useState(initialNewAdminState);
+
 
   function formatTime(timeString) {
     const [timePart] = timeString.split(' ');
@@ -69,9 +81,18 @@ function Table4() {
     displayNotification('Admin details edited successfully', 'success');
   };
 
-  const handleAdd = () => {
-    setShowAddModal(false);
-    displayNotification('Admin added successfully', 'success');
+  const handleAdd = async () => {
+    try {
+      const response = await axios.post(`${api}/admin/register`, newAdmin);
+      if (response.status === 201) {
+        fetchData();
+        setShowAddModal(false);
+        displayNotification('Admin added successfully', 'success');
+      }
+    } catch (error) {
+      console.error("Error adding admin:", error);
+      displayNotification('Error adding admin', 'error');
+    }
   };
 
   const fetchData = async () => {
@@ -85,6 +106,14 @@ function Table4() {
       console.error("Error fetching Admin data:", error);
       displayNotification('Error fetching admin data', 'error');
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewAdmin((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   return (
@@ -118,7 +147,7 @@ function Table4() {
                 <td className="border text-center">{admin.phone}</td>
                 <td className="border text-center">{admin.email}</td>
                 <td className="border text-center">{formatTime(admin.time)}</td>
-                <td className="border text-center">lorem ipsum</td>
+                <td className="border text-center">{admin.role}</td>
                 <td className="border text-center">
                   <div className="relative">
                     <IconDotsVertical
@@ -241,14 +270,51 @@ function Table4() {
           <input
             type="text"
             className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-            placeholder="Email ID"
+            placeholder="Admin Name"
+            name="name"
+            value={newAdmin.name}
+            onChange={handleInputChange}
           />
         </div>
         <div className="border rounded-lg m-2 lg:w-96">
           <input
             type="text"
             className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Mobile Number"
+            name="phone"
+            value={newAdmin.phone}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Email ID"
+            name="email"
+            value={newAdmin.email}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
             placeholder="Password"
+            name="password"
+            value={newAdmin.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="border rounded-lg m-2 lg:w-96">
+          <input
+            type="text"
+            className=" px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
+            placeholder="Role"
+            name="role"
+            value={newAdmin.role}
+            onChange={handleInputChange}
           />
         </div>
         <button className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg" onClick={handleAdd}>

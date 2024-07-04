@@ -49,6 +49,12 @@ function Sidebar() {
                             </li>
                             <IconUsers stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
                         </div>
+                        <div className='flex justify-between'>
+                            <li className={`${activeItem === 'api' ? 'text-white' : 'text-opacity-40'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
+                                <Link to="/api" onClick={() => handleItemClick('api')}>API</Link>
+                            </li>
+                            <IconUsers stroke={1} className={` ${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3 h-[0px] w-[0px]'}`} />
+                        </div>
                     </ul>
                 </div>
             </div>

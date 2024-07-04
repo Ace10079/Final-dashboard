@@ -10,6 +10,8 @@ import Layout from './Layout/Layout';
 import SignUp from './SignUp/SignUp';
 import Account from './Profile/Account';
 import EmailLogin from './SignUp/EmailLogin';
+import API from '../API.jsx';
+
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
           <Route path="/solution" element={<Solution />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/profile" element={<Account />} />
+          <Route path="/api" element={<API/>} />
         </Route>
       </Routes>
     </BrowserRouter>

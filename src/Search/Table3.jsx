@@ -95,8 +95,8 @@ function Table3() {
             <tr>
               <th className="border text-center">S.no</th>
               <th className="border text-center">Image ID</th>
-              <th className="border text-center">Customer Name</th>
-              <th className="border text-center">Disease Name</th>
+              <th className="border text-center">User ID</th>
+              <th className="border text-center">Disease ID</th>
               <th className="border text-center">Date & Time</th>
               <th className='border text-center'>Image</th>
               <th className="border text-center"><IconDotsVertical stroke={1} /></th>
@@ -107,8 +107,8 @@ function Table3() {
               <tr key={index}>
                 <td className="border text-center">{serialNumber + index}</td>
                 <td className="border text-center">{image.Image_id.substring(0, 10)}</td>
-                <td className="border text-center">{image.name}</td>
-                <td className="border text-center">{image.dis_name}</td>
+                <td className="border text-center">{image.user_id}</td>
+                <td className="border text-center">{image.dis_id}</td>
                 <td className="border text-center">{formatTime(image.time)}{image.date}</td>
                 <td className="border text-center">
   <img src={`${api}/${image.img}`} alt="Image" className="img-thumbnail" style={{ width: '100px' }} />

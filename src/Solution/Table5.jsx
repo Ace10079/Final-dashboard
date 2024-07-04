@@ -98,18 +98,31 @@ function Table5() {
     }
   };
 
-  const handleEditDisease = async () => {
+  const handleEditDisease = async (dis_Id) => {
     try {
-      const response = await axios.put(`${api}/updatedisease`, {
+      console.log("Updating disease with ID:", dis_Id);
+      console.log("Updated data:", {
+        dis_id: dis_Id,
         disname: currentDisease.disname,
         desc: currentDisease.desc,
         solution: currentDisease.solution,
       });
-
+  
+      const response = await axios.put(`${api}/updatedisease`, {
+        dis_id: dis_Id,
+        disname: currentDisease.disname,
+        desc: currentDisease.desc,
+        solution: currentDisease.solution,
+      });
+  
       if (response.status === 200) {
-        fetchData();
-        setShowEditModal(false);
+        console.log("Update response:", response.data);
+        fetchData(); // Refresh the data after successful update
+        setShowEditModal(false); // Close the edit modal
         displayNotification("Disease updated successfully", "success");
+      } else {
+        console.error("Failed to update disease. Status:", response.status);
+        displayNotification("Failed to update disease", "error");
       }
     } catch (error) {
       console.error("Error updating disease:", error);
@@ -307,7 +320,7 @@ function Table5() {
               </div>
               <button
                 className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
-                onClick={handleEditDisease}
+                onClick={()=>handleEditDisease(currentDisease.dis_id)}
               >
                 Save
               </button>

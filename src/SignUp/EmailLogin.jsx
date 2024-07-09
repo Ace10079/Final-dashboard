@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { api } from "../Host"; // Make sure you have the correct path to your Host file
+import { api } from "../Host";
+import { useAuth } from "./AuthContext";
 
 function EmailLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // Success or error message
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${api}/validateAdmin`, { email, password });
       console.log("User logged in successfully:", response.data);
       setMessage("Login successful! Redirecting to dashboard...");
-      setTimeout(() => navigate("/dashboard"), 2000); // Redirect after 2 seconds
+      login(); // Set the auth state to true
+      setTimeout(() => navigate("/dashboard"), 2000);
     } catch (error) {
       console.error("Error during login:", error);
       setMessage(`Error during login: ${error.response ? error.response.data.message : error.message}`);
@@ -26,9 +29,7 @@ function EmailLogin() {
       <div className="relative lg:w-[765px] lg:h-[100px] w-[520px]">
         <div className="bg-green-700 lg:p-2 lg:w-[765px] relative lg:h-[100px] w-[500px] h-[100px]">
           <p className="text-white lg:p-0 text-xl lg:ml-2 p-2">Welcome back</p>
-          <p className="lg:mt-2 mt-2 text-white text-lg lg:ml-2 ml-2">
-            Sign in to Continue your Search
-          </p>
+          <p className="lg:mt-2 mt-2 text-white text-lg lg:ml-2 ml-2">Sign in to Continue your Search</p>
         </div>
         <img
           src="./login.png"

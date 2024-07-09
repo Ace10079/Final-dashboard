@@ -11,27 +11,79 @@ import SignUp from './SignUp/SignUp';
 import Account from './Profile/Account';
 import EmailLogin from './SignUp/EmailLogin';
 import API from '../API.jsx';
-
+import { AuthProvider } from './SignUp/AuthContext';
+import ProtectedRoute from './SignUp/ProtectedRoute';
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<EmailLogin/>}></Route>
-        <Route path="/" element={<Layout/>}>
-          <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route path="/customer" element={<Customer />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/solution" element={<Solution />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/profile" element={<Account />} />
-          <Route path="/api" element={<API/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<EmailLogin />} />
+          <Route path="/" element={<Layout />}>
+            <Route
+              exact
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/customer"
+              element={
+                <ProtectedRoute>
+                  <Customer />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <ProtectedRoute>
+                  <Search />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/solution"
+              element={
+                <ProtectedRoute>
+                  <Solution />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/api"
+              element={
+                <ProtectedRoute>
+                  <API />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
 
 export default App;

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { IconUserPlus,IconUsers,IconSearch } from '@tabler/icons-react';
+import { IconUserPlus, IconUsers, IconSearch } from '@tabler/icons-react';
 import axios from 'axios';
 import { api } from '../Host';
 
 function Cards() {
   const [totalCustomers, setTotalCustomers] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalSearches, setTotalSearches] = useState(0);
 
   useEffect(() => {
     fetchTotalCustomers();
+    fetchTotalUsers();
+    fetchTotalSearches();
   }, []);
 
   const fetchTotalCustomers = async () => {
@@ -21,40 +25,62 @@ function Cards() {
       console.error('Error fetching total customers:', error);
     }
   };
-  return (
-    <div className='flex flex-col justify-center lg:flex-row lg:m-2 lg:gap-10 font-bold text-sm'>
-      <div className='border-solid border-2 items-center lg:justify-between justify-between rounded-lg flex lg:gap-3 ml-14 mt-3 bg-white hover:shadow-2xl w-64 lg:w-72 lg:m-2'>
-        <div className='p-3'>
-          <p>Total No. of Users</p>
-          <p>34</p>
-        </div>
-        <div className='p-3 mt-1 text-white'>
-        <IconUserPlus stroke={2} className='h-9 w-9 bg-green-600 p-1 rounded-full'/>
-        </div>
 
+  const fetchTotalUsers = async () => {
+    try {
+      const response = await axios.get(`${api}/getall/admin`);
+      if (response.status === 200) {
+        const totalUsersCount = response.data.data.length;
+        setTotalUsers(totalUsersCount);
+      }
+    } catch (error) {
+      console.error('Error fetching total users:', error);
+    }
+  };
+
+  const fetchTotalSearches = async () => {
+    try {
+      const response = await axios.get(`${api}/getall/image`);
+      if (response.status === 200) {
+        const totalSearchesCount = response.data.data.length;
+        setTotalSearches(totalSearchesCount);
+      }
+    } catch (error) {
+      console.error('Error fetching total searches:', error);
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 font-bold text-sm mt-3 mx-12">
+      <div className="border-solid border-2 items-center rounded-lg flex justify-between bg-white hover:shadow-2xl w-64 lg:w-72 p-3">
+        <div>
+          <p>Total No. of Users</p>
+          <p>{totalUsers}</p>
+        </div>
+        <div className="mt-1 text-white">
+          <IconUserPlus stroke={2} className="h-9 w-9 bg-green-600 p-1 rounded-full" />
+        </div>
       </div>
-      <div className='border-solid border-2 items-center rounded-lg lg:justify-between justify-between flex lg:gap-3 ml-14 mt-3 bg-white hover:shadow-2xl w-64 lg:w-72 lg:m-2'>
-        <div className='p-3'>
+      <div className="border-solid border-2 items-center rounded-lg flex justify-between bg-white hover:shadow-2xl w-64 lg:w-72 p-3">
+        <div>
           <p>Total No. of Customers</p>
           <p>{totalCustomers}</p>
         </div>
-        <div className='p-3 mt-1 text-white'>
-        <IconUsers stroke={2} className='h-9 w-9 bg-green-600 p-1 rounded-full' />
+        <div className="mt-1 text-white">
+          <IconUsers stroke={2} className="h-9 w-9 bg-green-600 p-1 rounded-full" />
         </div>
-
       </div>
-      <div className='border-solid border-2 items-center lg:justify-between justify-between rounded-lg flex lg:gap-3 ml-14 mt-3 bg-white hover:shadow-2xl w-64 lg:w-72 lg:m-2'>
-        <div className='p-3'>
+      <div className="border-solid border-2 items-center rounded-lg flex justify-between bg-white hover:shadow-2xl w-64 lg:w-72 p-3">
+        <div>
           <p>Total No. of Searches</p>
-          <p>34</p>
+          <p>{totalSearches}</p>
         </div>
-        <div className='p-3 mt-1 text-white'>
-        <IconSearch stroke={2} className='h-9 w-9 bg-green-600 p-1 rounded-full' />
+        <div className="mt-1 text-white">
+          <IconSearch stroke={2} className="h-9 w-9 bg-green-600 p-1 rounded-full" />
         </div>
-
       </div>
     </div>
-  )
+  );
 }
 
-export default Cards
+export default Cards;

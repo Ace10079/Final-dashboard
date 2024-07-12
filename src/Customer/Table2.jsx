@@ -115,38 +115,38 @@ function Table2() {
   };
 
   return (
-    <div className="bg-white border-solid border-2 rounded-lg m-3" style={{ maxHeight: "350px", overflow: "auto" }}>
+    <div className="bg-white h-[450px] border-solid border-2 rounded-lg m-3 p-2" style={{ maxHeight: "350px", overflow: "auto" }}>
       <div className="flex justify-between">
-        <p className="p-2 font-bold font-[Century Gothic]">Customer List</p>
+        <p className="p-2 font-bold font-[Century Gothic] text-2xl">Customer List</p>
       </div>
 
       <div className="p-1 mt-2">
         <Table responsive="sm" bordered>
           <thead>
             <tr>
-              <th className="border">S.no</th>
-              <th className="border">Customer ID</th>
-              <th className="border">Customer Name</th>
-              <th className="border">Date & Time</th>
-              <th className="border">Phone Number</th>
-              <th className="border">Email ID</th>
-              <th className="border">
-                <IconDotsVertical stroke={1} />
+              <th className="border text-center">S.no</th>
+              <th className="border text-center">Customer ID</th>
+              <th className="border text-center">Customer Name</th>
+              <th className="border text-center">Date & Time</th>
+              <th className="border text-center">Phone Number</th>
+              <th className="border text-center">Email ID</th>
+              <th className="border text-center">
+               Action
               </th>
             </tr>
           </thead>
           <tbody>
             {data.map((customer, index) => (
               <tr key={index}>
-                <td className="border">{serialNumber + index}</td>
-                <td className="border">{customer.user_id.substring(0, 8)}</td>
-                <td className="border">{customer.fname}</td>
-                <td className="border">{formatTime(customer.time)}</td>
-                <td className="border">{customer.phone}</td>
-                <td className="border">{customer.email}</td>
-                <td className="border">
-                  <div className="relative">
-                    <IconDotsVertical stroke={1} onClick={() => toggleDropdown(index)} />
+                <td className="border text-center">{serialNumber + index}</td>
+                <td className="border text-center">{customer.user_id.substring(0, 8)}</td>
+                <td className="border text-center">{customer.fname}</td>
+                <td className="border text-center">{formatTime(customer.time)}</td>
+                <td className="border text-center">{customer.phone}</td>
+                <td className="border text-center">{customer.email}</td>
+                <td className="border text-center">
+                  <div className="relative  ">
+                    <IconDotsVertical stroke={1} onClick={() => toggleDropdown(index)} className="absolute right-5" />
 
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-35px" }}>

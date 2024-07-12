@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconMenuDeep, IconDashboard, IconUser, IconSearch, IconUsers, IconLayoutDashboard, IconDeviceImacQuestion } from '@tabler/icons-react';
+import { MdLink } from "react-icons/md";
 
 function Sidebar() {
     const [open, setOpen] = useState(true);
@@ -61,14 +62,14 @@ function Sidebar() {
                                 <IconUsers stroke={1} className={`${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3'} ${activeItem === 'admin' ? 'text-white' : 'text-opacity-40'} h-[0px] w-[0px]`} />
                             </Link>
                         </div>
-                        <div className='flex justify-between'>
+                        {/*<div className='flex justify-between'>
                             <li className={`${activeItem === 'api' ? 'text-white' : 'text-opacity-40'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1]`}>
                                 <Link to="/api" onClick={() => handleItemClick('api')}>API</Link>
                             </li>
                             <Link to="/api" onClick={() => handleItemClick('api')}>
-                                <IconUsers stroke={1} className={`${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3'} ${activeItem === 'api' ? 'text-white' : 'text-opacity-40'} h-[0px] w-[0px]`} />
+                                <MdLink stroke={1} className={`${open ? 'hidden' : 'lg:w-[30px] lg:h-[30px] lg:mr-3'} ${activeItem === 'api' ? 'text-white' : 'text-opacity-40'} h-[0px] w-[0px]`} />
                             </Link>
-                        </div>
+                        </div>*/}
                     </ul>
                 </div>
             </div>

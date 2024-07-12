@@ -17,6 +17,7 @@ function Table5() {
   const [serialNumber, setSerialNumber] = useState(1);
 
   const [newDiseaseName, setNewDiseaseName] = useState("");
+  const [newUserID, setNewUserID] = useState("");
   const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
   const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
   const [notification, setNotification] = useState({ message: "", type: "" });
@@ -49,9 +50,9 @@ function Table5() {
 
   const handleDelete = async () => {
     try {
-      const diseaseToDelete = data[dropdownIndex].disname;
+      const diseaseToDelete = data[dropdownIndex].dis_id;
       const response = await axios.delete(`${api}/deletedisease`, {
-        data: { disname: diseaseToDelete },
+        data: {dis_id: diseaseToDelete },
       });
       if (response.status === 200) {
         fetchData();
@@ -133,6 +134,7 @@ function Table5() {
   const handleAddDisease = async () => {
     try {
       const response = await axios.post(`${api}/disease/register`, {
+        user_id: newUserID,
         disname: newDiseaseName,
         desc: newDiseaseDesc,
         solution: newDiseaseSolution,
@@ -141,6 +143,7 @@ function Table5() {
       if (response.status === 201) {
         fetchData();
         setShowAddModal(false);
+        setNewUserID("");
         setNewDiseaseName("");
         setNewDiseaseDesc("");
         setNewDiseaseSolution("");
@@ -152,13 +155,23 @@ function Table5() {
     }
   };
 
+  const truncateText = (text, wordLimit) => {
+    const words = text.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return text;
+  };
+  
+  const wordLimit = 5;
+
   return (
     <div
-      className="bg-white border-solid border-2 rounded-lg m-3"
-      style={{ maxHeight: "500px", overflow: "auto" }}
+      className="bg-white h-[450px] pb-12 border-solid border-2 rounded-lg m-3 p-2"
+      style={{ maxHeight: "", overflow: "auto" }}
     >
       <div className="flex justify-between">
-        <p className="p-2 font-bold font-[Century Gothic]">
+        <p className="p-2 font-bold text-2xl font-[Century Gothic]">
           Disease & Solution
         </p>
         <button
@@ -177,9 +190,7 @@ function Table5() {
               <th className="border text-center">Disease Name</th>
               <th className="border text-center">Description</th>
               <th className="border text-center">Solution</th>
-              <th className="border text-center">
-                <IconDotsVertical stroke={1} />
-              </th>
+              <th className="border text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -190,13 +201,14 @@ function Table5() {
                   {disease.dis_id.substring(0, 7)}
                 </td>
                 <td className="border text-center">{disease.disname}</td>
-                <td className="border text-center">{disease.desc}</td>
-                <td className="border text-center">{disease.solution}</td>
+                <td className="border">{truncateText(disease.desc, wordLimit)}</td>
+                <td className="border">{truncateText(disease.solution, wordLimit)}</td>
                 <td className="border text-center">
                   <div className="relative">
                     <IconDotsVertical
                       stroke={1}
                       onClick={() => toggleDropdown(index)}
+                      className="absolute right-5"
                     />
                     {dropdownIndex === index && (
                       <div
@@ -230,163 +242,159 @@ function Table5() {
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <button
           onClick={() => setShowModal(false)}
-          className="text-white absolute lg:left-[460px] lg:top-[10px] right-[4px] top-[4px] font-bold bg-green-600 pl-[7px] pr-2 pt-0.5 pb-0.5 rounded-full"
-          style={{ width: "24px", height: "24px", lineHeight: "1" }}
+          className="text-white absolute lg:left-[460px] lg:top-[10px] md:left-[330px] md:top-[10px]"
         >
           X
         </button>
-
-        <p className="text-2xl text-center pt-3 font-bold">Are you Sure</p>
-        <p className="text-xl text-center p-3">
-          Are you sure do you want to delete the Disease ID
-        </p>
-        <div className="flex flex-row justify-center gap-2 pb-3">
+        <Modal.Body className="p-6">
+          <p className="text-lg font-bold">Delete</p>
+          <p className="mt-4">
+            Are you sure you want to delete this disease data?
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            No
+          </Button>
           <Button
             variant="danger"
-            className="bg-white pl-5 pr-5 text-green-500 border-black hover:text-green-500"
             onClick={handleDelete}
+            className="bg-red-500 text-white"
           >
-            Confirm
+            Yes
           </Button>
-          <Button
-            className="pl-5 pr-5"
-            variant="success"
-            onClick={() => setShowModal(false)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </Modal>
-
-      {/* Modal for editing disease */}
-      <Modal
-        show={showEditModal}
-        onHide={() => setShowEditModal(false)}
-        centered
-      >
-        <div className="flex justify-center p-2">
-          <div className="border w-[450px] border-white rounded">
-            <p className="font-bold mt-10 text-3xl mb-10 text-center">
-              Edit Disease & Solution
-            </p>
-            <button
-              className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
-              onClick={() => setShowEditModal(false)}
-            >
-              X
-            </button>
-            <div className="flex flex-col justify-center items-center">
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={currentDisease.disname}
-                  onChange={(e) =>
-                    setCurrentDisease({
-                      ...currentDisease,
-                      disname: e.target.value,
-                    })
-                  }
-                  placeholder="Disease Name"
-                />
-              </div>
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={currentDisease.desc}
-                  onChange={(e) =>
-                    setCurrentDisease({
-                      ...currentDisease,
-                      desc: e.target.value,
-                    })
-                  }
-                  placeholder="Disease Description"
-                />
-              </div>
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={currentDisease.solution}
-                  onChange={(e) =>
-                    setCurrentDisease({
-                      ...currentDisease,
-                      solution: e.target.value,
-                    })
-                  }
-                  placeholder="Disease Solution"
-                />
-              </div>
-              <button
-                className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
-                onClick={()=>handleEditDisease(currentDisease.dis_id)}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+        </Modal.Footer>
       </Modal>
 
       {/* Modal for adding disease */}
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
-        <div className="flex justify-center p-2">
-          <div className="border w-[450px] border-white rounded">
-            <p className="font-bold mt-10 text-3xl mb-10 text-center">
-              Add Disease & Solution
-            </p>
-            <button
-              className="text-white absolute lg:top-4 lg:right-4 top-2 right-2 font-bold bg-green-600 pl-2 pr-2 pt-0.5 pb-0.5 rounded-full"
-              onClick={() => setShowAddModal(false)}
-            >
-              X
-            </button>
-            <div className="flex flex-col justify-center items-center">
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={newDiseaseName}
-                  onChange={(e) => setNewDiseaseName(e.target.value)}
-                  placeholder="Disease Name"
-                />
-              </div>
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={newDiseaseDesc}
-                  onChange={(e) => setNewDiseaseDesc(e.target.value)}
-                  placeholder="Disease Description"
-                />
-              </div>
-              <div className="border rounded-lg m-2 lg:w-96">
-                <input
-                  type="text"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-blue-500 text-black border-black"
-                  value={newDiseaseSolution}
-                  onChange={(e) => setNewDiseaseSolution(e.target.value)}
-                  placeholder="Disease Solution"
-                />
-              </div>
-              <button
-                className="bg-green-800 pl-28 pr-28 pt-1 pb-1  mb-10 mt-10 text-white border rounded-lg"
-                onClick={handleAddDisease}
-              >
-                Add Disease
-              </button>
+        <button
+          onClick={() => setShowAddModal(false)}
+          className="text-white absolute lg:left-[460px] lg:top-[10px] md:left-[330px] md:top-[10px]"
+        >
+          X
+        </button>
+        <Modal.Body className="p-6">
+          <p className="text-lg font-bold">Add Disease</p>
+          <form className="mt-4">
+            <div className="mb-3">
+              <label className="form-label">User ID</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="User ID"
+                value={newUserID}
+                onChange={(e) => setNewUserID(e.target.value)}
+              />
             </div>
-          </div>
-        </div>
+            <div className="mb-3">
+              <label className="form-label">Disease Name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Disease Name"
+                value={newDiseaseName}
+                onChange={(e) => setNewDiseaseName(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Description</label>
+              <textarea
+                className="form-control"
+                placeholder="Description"
+                value={newDiseaseDesc}
+                onChange={(e) => setNewDiseaseDesc(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Solution</label>
+              <textarea
+                className="form-control"
+                placeholder="Solution"
+                value={newDiseaseSolution}
+                onChange={(e) => setNewDiseaseSolution(e.target.value)}
+              />
+            </div>
+            <Button
+              variant="success"
+              onClick={handleAddDisease}
+              className="bg-green-500 text-white"
+            >
+              Add
+            </Button>
+          </form>
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal for editing disease */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <button
+          onClick={() => setShowEditModal(false)}
+          className="text-white absolute lg:left-[460px] lg:top-[10px] md:left-[330px] md:top-[10px]"
+        >
+          X
+        </button>
+        <Modal.Body className="p-6">
+          <p className="text-lg font-bold">Edit Disease</p>
+          <form className="mt-4">
+            <div className="mb-3">
+              <label className="form-label">Disease Name</label>
+              <input
+                type="text"
+                className="form-control"
+                value={currentDisease.disname}
+                onChange={(e) =>
+                  setCurrentDisease({
+                    ...currentDisease,
+                    disname: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Description</label>
+              <textarea
+                className="form-control"
+                value={currentDisease.desc}
+                onChange={(e) =>
+                  setCurrentDisease({ ...currentDisease, desc: e.target.value })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Solution</label>
+              <textarea
+                className="form-control"
+                value={currentDisease.solution}
+                onChange={(e) =>
+                  setCurrentDisease({
+                    ...currentDisease,
+                    solution: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <Button
+              variant="success"
+              onClick={() => handleEditDisease(currentDisease.dis_id)}
+              className="bg-green-500 text-white"
+            >
+              Update
+            </Button>
+          </form>
+        </Modal.Body>
       </Modal>
 
       {/* Notification */}
-      <div className={`notification-container ${showNotification ? "notification-show" : ""} ${notification.type === 'success' ? 'notification-success' : 'notification-error'}`}>
-        <div className="notification-content">
+      {showNotification && (
+        <div
+          className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-white ${
+            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
           {notification.message}
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Table2 from '../Customer/Table2'
 
 function Dashboard() {
   return (
-    <div>
+    <div className='mt-8'>
      <Cards/>
      <Table2/> 
   </div>

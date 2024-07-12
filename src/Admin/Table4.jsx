@@ -117,9 +117,9 @@ function Table4() {
   };
 
   return (
-    <div className='bg-white border-solid border-2 rounded-lg m-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
+    <div className='bg-white p-2 h-[450px] border-solid border-2 rounded-lg m-3' style={{ maxHeight: '', overflow: 'auto' }}>
       <div className='flex justify-between'>
-        <p className='p-2 font-bold font-[Century Gothic]'>
+        <p className='p-2 text-2xl font-bold font-[Century Gothic]'>
           User List
         </p>
         <button className='mr-2 bg-green-500 pl-5 pr-5 rounded-lg font-bold mt-2 text-white' onClick={() => setShowAddModal(true)}>Add +</button>
@@ -135,7 +135,7 @@ function Table4() {
               <th className="border text-center">Email ID</th>
               <th className="border text-center">Date & Time</th>
               <th className='border text-center'>Role</th>
-              <th className="border text-center"><IconDotsVertical stroke={1} /></th>
+              <th className="border text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -152,7 +152,9 @@ function Table4() {
                   <div className="relative">
                     <IconDotsVertical
                       stroke={1}
-                      onClick={() => toggleDropdown(index)}
+                      onClick={() => toggleDropdown(index)
+                      }
+                      className="absolute right-5"
                     />
                     {dropdownIndex === index && (
                       <div className="absolute bg-white shadow-md rounded-lg mt-2 py-1 w-20 z-10 border" style={{ left: "-37px" }}>

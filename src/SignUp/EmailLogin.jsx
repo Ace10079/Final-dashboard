@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api } from "../Host";
-import { useAuth } from "./AuthContext";
 
-function EmailLogin() {
+function EmailLogin({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${api}/validateAdmin`, { email, password });
       console.log("User logged in successfully:", response.data);
+      const { token } = response.data;
+      onLogin(token);
       setMessage("Login successful! Redirecting to dashboard...");
-      login(); // Set the auth state to true
       setTimeout(() => navigate("/dashboard"), 2000);
     } catch (error) {
       console.error("Error during login:", error);

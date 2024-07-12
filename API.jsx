@@ -72,11 +72,11 @@ function API() {
 
   return (
     <div
-      className="bg-white border-solid border-2 rounded-lg m-3"
+      className="bg-white p-2 border-solid border-2 rounded-lg m-3"
       style={{ maxHeight: "200px", overflow: "auto" }}
     >
       <div className="flex justify-between">
-        <p className="p-2 font-bold font-[Century Gothic]">API List</p>
+        <p className="p-2 font-bold text-2xl font-[Century Gothic]">API List</p>
       </div>
       <div className="p-2">
         <Table responsive="sm" bordered>

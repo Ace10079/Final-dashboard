@@ -20,6 +20,7 @@ function Table5() {
   const [newUserID, setNewUserID] = useState("");
   const [newDiseaseDesc, setNewDiseaseDesc] = useState("");
   const [newDiseaseSolution, setNewDiseaseSolution] = useState("");
+  const [newDiseaseCause, setNewDiseaseCause] = useState("");
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [showNotification, setShowNotification] = useState(false);
 
@@ -27,6 +28,7 @@ function Table5() {
     disname: "",
     desc: "",
     solution: "",
+    cause: ""
   });
 
   function formatTime(timeString) {
@@ -107,6 +109,7 @@ function Table5() {
         disname: currentDisease.disname,
         desc: currentDisease.desc,
         solution: currentDisease.solution,
+        cause: currentDisease.cause
       });
   
       const response = await axios.put(`${api}/updatedisease`, {
@@ -114,6 +117,7 @@ function Table5() {
         disname: currentDisease.disname,
         desc: currentDisease.desc,
         solution: currentDisease.solution,
+        cause: currentDisease.cause
       });
   
       if (response.status === 200) {
@@ -138,6 +142,7 @@ function Table5() {
         disname: newDiseaseName,
         desc: newDiseaseDesc,
         solution: newDiseaseSolution,
+        cause: newDiseaseCause
       });
 
       if (response.status === 201) {
@@ -147,6 +152,7 @@ function Table5() {
         setNewDiseaseName("");
         setNewDiseaseDesc("");
         setNewDiseaseSolution("");
+        setNewDiseaseCause("");
         displayNotification("Disease added successfully", "success");
       }
     } catch (error) {
@@ -190,6 +196,7 @@ function Table5() {
               <th className="border text-center">Disease Name</th>
               <th className="border text-center">Description</th>
               <th className="border text-center">Solution</th>
+              <th className="border text-center">Cause</th>
               <th className="border text-center">Action</th>
             </tr>
           </thead>
@@ -203,6 +210,7 @@ function Table5() {
                 <td className="border text-center">{disease.disname}</td>
                 <td className="border">{truncateText(disease.desc, wordLimit)}</td>
                 <td className="border">{truncateText(disease.solution, wordLimit)}</td>
+                <td className="border">{disease.cause}</td>
                 <td className="border text-center">
                   <div className="relative">
                     <IconDotsVertical
@@ -315,6 +323,15 @@ function Table5() {
                 onChange={(e) => setNewDiseaseSolution(e.target.value)}
               />
             </div>
+            <div className="mb-3">
+              <label className="form-label">Cause</label>
+              <textarea
+                className="form-control"
+                placeholder="Cause"
+                value={newDiseaseCause}
+                onChange={(e) => setNewDiseaseCause(e.target.value)}
+              />
+            </div>
             <Button
               variant="success"
               onClick={handleAddDisease}
@@ -370,6 +387,19 @@ function Table5() {
                   setCurrentDisease({
                     ...currentDisease,
                     solution: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Cause</label>
+              <textarea
+                className="form-control"
+                value={currentDisease.cause}
+                onChange={(e) =>
+                  setCurrentDisease({
+                    ...currentDisease,
+                    cause: e.target.value,
                   })
                 }
               />

@@ -207,8 +207,12 @@ function Table3() {
             <p className="pl-2 ">
               {diseaseData.solution || "Solution not available"}
             </p>
+            <p className="text-[green] font-[Century Gothic] pl-2 text-xl">Cause</p>
+            <p className="pl-2 ">
+              {diseaseData.cause || "Cause not available"}
+            </p>
             <div className="flex justify-center">
-            <button className="pl-20 pr-28 pt-1 pb-1 w-3 text-[green] border rounded-lg  hover:bg-[green] hover:text-white border-[green] text-center">
+            <button className="pl-20 pr-28 pt-1 pb-1 w-3 text-[green] border rounded-lg  hover:bg-[green] hover:text-white border-[green] text-center " onClick={handleDelete}>
               Delete
             </button>
             </div>
